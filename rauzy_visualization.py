@@ -103,7 +103,6 @@ def pisot(sub: list, n: int, dot_size = 6, label = False):
   plt.show()
 
 pisot([[1,2], [0], [1]], 50, 1.2)
-pisot([[1,2], [0,2], [0,1]], 15, 1.2)
-#pisot([[0,1],[0,2],[0]], 15, 1.2)  #Rauzy fractal, up to 5th A-layer (proper prefixes of 15th word)
+pisot([[0,1],[0,2],[0]], 18, 0.1)  #Rauzy fractal, up to 5th A-layer (proper prefixes of 18th word)
 #pisot([[0,1],[0,2],[0,3],[0]], 6, 6, True)  #3D Rauzy fractal, proper prefixes of 6th word
 #pisot([[0,1],[0,2],[0,3],[0]], 12, 1.2) #3D Rauzy fractal, proper prefixes of 12th word
