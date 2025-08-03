@@ -1,0 +1,309 @@
+\documentclass{article}
+\usepackage{amssymb}
+\usepackage{graphicx}
+\usepackage{amsmath}
+\usepackage[english]{babel}
+\usepackage{amsthm}
+\usepackage{mathrsfs}
+\usepackage[colorlinks=true, linkcolor=blue]{hyperref}
+\usepackage[capitalize,nameinlink]{cleveref}
+\theoremstyle{definition}
+\newtheorem{theorem}{Theorem}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem*{remark}{Remark}
+\newtheorem*{definition}{Definition}
+\newtheorem*{example}{Example}
+\predisplaypenalty=0
+\postdisplaypenalty=0
+\abovedisplayskip=12pt plus 3pt minus 9pt
+\belowdisplayskip=12pt plus 3pt minus 9pt
+
+\title{\textbf{Decomposition of Tribonacci Words and Rauzy Fractal}}
+\author{Eunseong Kim}
+\date{August 2, 2025}
+
+\begin{document}
+
+\maketitle
+
+\section{Tribonacci Sequence}
+
+We first define the Tribonacci sequence. Hereafter, the set of natural numbers $\mathbb{N}=\{0,1,2,\cdots,\}$ includes zero.
+
+\begin{definition}
+The \textbf{Tribonacci sequence} is the infinite sequence $\{T_n \}_{n=0}^{\infty}$ defined as
+\[T_0 = 1,\ T_1=2,\ T_2=4,\ T_{n+3}=T_{n+2}+T_{n+1}+T_n\]
+For convenience, we define $T_{n}=0(n\leq -2)$ and $T_{-1}=1$.
+\end{definition}
+
+By definition, the recurrence holds for all integers $n\geq -3$. We will be concerned with representing a natural number as a sum of elements of the Tribonacci sequence.
+
+\begin{definition} For a finite set $S\subset \mathbb{N}$, we define
+\[\text{sum}(S):=\sum_{n\in S} T_n\]
+and say that $S$ is a \textbf{$T$-decomposition} of $\text{sum}(S)$.
+\end{definition}
+
+Note that the recurrence for the Tribonacci sequence implies that three consecutive integers $n, n+1, n+2\in S$ can be replaced by $n+3$ without changing $\text{sum}(S)$. We will establish some results about $T$-decompositions without any three consecutive integers. The results are essentially the same as those in section 10.7 of \textit{Lothaire, Applied Combinatorics on Words, 2004}, but the notation is different for higher clarity.
+
+\begin{definition}
+We say that $S\subset \mathbb{N}$ is \textbf{irreducible} if $\{n,n+1,n+2\} \not\subset S$ for any $n\in \mathbb{N}$.
+\end{definition}
+
+\begin{lemma}
+\label{lemma}
+For any $n\in \mathbb{N}$, the maximum value of $\text{sum}(S)$ for $S\subset\{0,1,\cdots,n-1\}$ under the condition $\forall k\geq 1,  \{n-3k+2, n-3k+1, n-3k\}\not\subset S$ is $T_n-1$, which is obtained when $S=\{k: 0\leq k\leq n-1, 3\nmid n-k\}$.
+\end{lemma}
+\begin{proof}
+Since
+\(
+  T_{n-3k+2} \geq T_{n-3k+1} \geq T_{n-3k}\geq0
+\)
+and the sets
+\(
+  \{n-3k+2, n-3k-1, n-3k\}
+\)
+are disjoint for \( k \in \mathbb{N} \), it follows that $\text{sum}(S)$ is maximized when choosing $n-3k+2$ and $n-3k+1$ $(k\in \mathbb{N})$ as elements of $S$ (of course, not choosing negative integers). $\text{sum} \left(\left\{k: 0\leq k\leq n-1, 3\nmid n-k \right\} \right)=T_n-1$ is immediate from induction on $n$; $n\leq2$ can be verified by hand, and the equation for $n\geq3$ reduces to $n-3$ because $T_n-1=T_{n-1}+T_{n-2}+\left(T_{n-3}-1 \right)$. 
+\end{proof}
+
+\begin{theorem}
+\label{thm 1} For any $N\in \mathbb{N}$, there is a unique irreducible $T$-decomposition $S$ of $N$. If $N\geq 1$, $n\in S$ for the largest $n\in \mathbb{N}$ with $T_n \leq N$.
+\end{theorem}
+
+\begin{proof}
+We use induction on $n\in\mathbb{N}$ to prove that the statement holds for $N<T_{n}$. If $n=0$, $N=0$, $S=\emptyset$ and the statement holds. Suppose $n\geq 1$ and the statement holds for smaller $n$. We already proved for $N<T_{n-1}$, so assume $T_{n-1}\leq N<T_n$. If the irreducible set $S$ does not contain $n-1$, $\text{sum}(S)\leq T_{n-1}-1<N$ by \cref{lemma}. Hence $n-1\in S$.
+\[
+N-T_{n-1}<T_n-T_{n-1}=T_{n-2}+T_{n-3}\leq T_{n-2}+T_{n-3}+T_{n-4}=T_{n-1}
+\]
+so the induction hypothesis applies to prove that there is a unique irreducible decomposition $S'\subset\mathbb{N}$ of $N-T_{n-1}$. Since $T_{n-1}=T_{n-2}+T_{n-3}+T_{n-4}>\text{sum}(S')$, $S'\subset\{0,1,\cdots,n-2\}$ and $\{n-4, n-3, n-2\}\not\subset S$. Hence $S=S'\cup\{n-1\}$ is an irreducible $T$-decomposition of $N$. Conversely $S\setminus\{n-1\}$ must be an irreducible $T$-decomposition of $N-T_{n-1}$, proving uniqueness.  
+\end{proof}
+
+The next result is a lemma used for proving \cref{thm 6} and \cref{thm 7} on Tribonacci words.
+
+\begin{lemma}
+\label{thm 2}
+Let \( S \) be a \( T \)-representation of \( N \in \mathbb{N} \).  
+While there exists \( n \in \mathbb{N} \) such that \( \{n, n+1, n+2\} \subset S \), take maximum among such $n$ and replace $ n, n+1, n+2  $ with \( n+3 \) in \( S \).  
+Then this process terminates with \( S \) the irreducible \( T \)-representation of \( N \).
+\end{lemma}
+
+\begin{proof}
+By maximality of $n$, $n+3\notin S$ at each step of the process, so $\text{sum}(S)$ changes by $T_{n+3}-(T_n+T_{n+1}+T_{n+2})=0$, so $\text{sum}(S)=N$ at any moment during the process. Furthermore $|S|$ decreases by $2$ each step, so the process eventually terminates. At termination, there is no $n\in\mathbb{N}$ with $\{n,n+1,n+2\}\subset S$; that is, $S$ is irreducible.
+\end{proof}
+
+\section{Tribonacci Words}
+
+We will now be considered with finite sequences consisting of $0, 1, 2$.
+\begin{definition}
+For a set $S$, a \textbf{word in $S$} is a finite sequence consisting of elements in $S$. If a word $W$ has elements $s_1, s_2, \cdots, s_n$ ($n\in \mathbb{N}$, $s_i\in S$) in order, we write  $W=s_1s_2\cdots s_n$, and define its \textbf{length}, denoted $|W|$, as $n$. A \textbf{prefix of $W$} is a word $s_1s_2\cdots s_k$ for any $0\leq k\leq n$. For $W=s_1s_2\cdots s_n$ and $W'=t_1t_2\cdots t_m$, we define the \textbf{concatenation of $W$ and $W'$}, denoted $WW'$, as the word $s_1s_2\cdots s_nt_1t_2\cdots t_m$. 
+\end{definition}
+
+\begin{example}
+$W_1=0102010$, $W_2=0102$, $W_3=01$ are words in $\{0,1,2\}$. Because concatenation operation is associative, we denote $(W_1W_2)W_3=W_1(W_2W_3)$ as $W_1W_2W_3=0102010010201$. Because we are talking exclusively about words in the set $\{0,1,2\}$, hereafter we will omit the phrase ``in $\{0,1,2\}$''. The empty string, $0$, $01$ are all prefixes of $W_3$.
+\end{example}
+
+\begin{definition}
+For a word $W$, let $a_i$ be the number of $i$ in $W$ for $i=0,1,2$. The three-dimensional vector $a_0e_0+a_1e_1+a_2e_2=(a_0, a_1, a_2)$ is the \textbf{vector corresponding to $W$}. Hereafter $e_0=(1,0,0)$, $e_1=(0,1,0)$, $e_2=(0,0,1)$ are the standard unit vectors of $\mathbb{R}^3$.
+\end{definition}
+\begin{definition}
+Let $\mathscr{W}$ be the set of all words. A function $\sigma: \mathscr{W}\rightarrow \mathscr{W}$ is a \textbf{substitution} if $\sigma(ab)=\sigma(a)\sigma(b)$ for any two words $a$ and $b$.
+\end{definition}
+
+The next theorem, which is intuitively obvious, shows that we can \textit{define} a substitution by specifying its values at $0$, $1$, $2$.
+
+\begin{theorem}
+For any three words $a_0, a_1, a_2$, there is a unique substitution $\sigma$ with $\sigma(i)=a_i$ for $i=0,1,2$. Furthermore, $\sigma(s_1s_2\cdots s_n)=a_{s_1}a_{s_2}\cdots a_{s_n}$ for any $s_1, s_2, \cdots, s_n\in\{0,1,2\}$. The vector corresponding to $w_n$ is denoted $v_n$.
+\end{theorem}
+\begin{proof}
+From the definition of concatenation of words, $\sigma$ is a substitution. Uniqueness of $\sigma$ can be proved by a straightforward induction on $n$.
+\end{proof}
+
+Now we define a special kind of substitution. The rest of this paper will be about Rauzy substitutions.
+
+\begin{definition}
+The substitution $\sigma$ defined as $\sigma(0)=01$, $\sigma(1)=02$, $\sigma(2)=0$ is called the \textbf{Rauzy substitution}.
+\end{definition}
+
+\begin{definition}
+For any $n\in \mathbb{N}$, the word $w_n:=\sigma^n(0)$, where the superscript $n$ denotes composing $\sigma$ with itself $n$ times, is called the \textbf{$n$\textsuperscript{th} Tribonacci word}. 
+\end{definition}
+\begin{example}
+It is straightforward from the definitions that
+\[ w_0=0,  \ w_1=01,\ w_2=0102, \ w_3=0102010\]
+\[ v_0=(1, 0, 0),  \ v_1=(1, 1, 0),\ v_2=(2, 1, 0), \ v_3=(4, 2, 1)\]
+\end{example}
+
+The next theorem, which can be viewed as an alternate definition of Tribonacci words, explains why $w_n$ are called Tribonacci words.
+
+\begin{theorem}
+\label{thm 3}
+For any $n\in \mathbb{N}$, $w_{n+3}=w_{n+2}w_{n+1}w_n$.
+\end{theorem}
+\begin{proof}
+The statement is true for $n=0$. If the statement is true for some $n$, $w_{n+4}=\sigma(w_{n+3})=\sigma(w_{n+2})\sigma(w_{n+1})\sigma(w_{n})=w_{n+3}w_{n+2}w_{n+1}$.
+\end{proof}
+
+\begin{theorem}
+\label{thm 3-1}
+For any $n\in \mathbb{N}$, $v_n=( T_{n-1}, T_{n-2}, T_{n-3})$ and $|w_n|=T_n$.
+\end{theorem}
+\begin{proof}
+The statement is true for $n\leq2$. \cref{thm 3} shows that the number of $0, 1, 2$ in $w_n$ each satisfies the recurrence relation of the Tribonacci sequence.
+\end{proof}
+
+\begin{theorem}
+\label{thm 3-2}
+For any $N\in \mathbb{N}$, let $m$ be the smallest nonnegative integer such that $|w_m|\geq N$. Then for all $n\geq m$, the prefix of $w_n$ of length $N$ is the same.
+\end{theorem}
+\begin{proof}
+By \cref{thm 3} and direct verification for $n\leq2$, $w_n$ is a prefix of $w_{n+1}$ for any $n\in \mathbb{N}$. Hence $w_m$ is a prefix of $w_n$ for $n\geq m$, finishing the proof.
+\end{proof}
+
+\cref{thm 3-2} and $\lim_{n\rightarrow\infty}T_n=\infty$ enables the following definition.
+
+\begin{definition}
+For any $N\in\mathbb{N}$, $p_N\in \mathbb{R}^3$ is the vector corresponding to the prefix of $w_n$ ($|w_n|\geq N$) of length $N$. $T=\{p_N:N\in \mathbb{N}\}\subset \mathbb{R}^3$  is the \textbf{Tribonacci domain}.
+\end{definition}
+For example, $(0,0,0) (1,0,0), (1,1,0), (2,1,0), (2,1,1)$ are elements of $T$. We will now investigate ways to express $T$ using sums of the word vectors $v_n$, which rely on the results established on sums of elements of the Tribonacci sequence. The results here are essentially the same as those in section 10.8 of \textit{Lothaire, Applied Combinatorics on Words, 2004}, but the proofs here show clearer relevance to the properties of the Tribonacci sequence.
+\begin{theorem}
+\label{thm 4}
+For any $N\in\mathbb{N}$ and the irreducible $T$-representation $S$ of $N$, \[ p_N=\sum_{i\in S} v_i\]
+\end{theorem}
+\begin{proof}
+We use induction as in \cref{thm 1}, with the base case verified easily. Let us prove the inductive step assuming $T_{n-1}\leq N<T_n(n\geq 1)$. \cref{thm 3} shows \[p_N=\begin{cases}
+    p_{T_{n-1}}+p_{N-T_{n-1}}, &T_{n-1}\leq N<T_{n-1}+T_{n-2}\\ 
+    p_{T_{n-1}}+p_{T_{n-2}}+p_{N-T_{n-1}-T_{n-2}} &T_{n-1}+T_{n-2}\leq N<T_{n}
+\end{cases}\]
+By \cref{thm 1}, we have $n-1\in S, n-2\notin S$ in the first case and $n-1\in S, n-2\in S$ in the second case, completing the proof by applying the induction hypothesis to the set $S\setminus\{n-1, n-2\}$.
+
+\end{proof}
+
+\begin{theorem}
+\label{thm 5-1}
+For any $n\in\mathbb{N}$,
+\[
+\left\{ \sum_{k\in S}v_k:\ S\subset \{0,1,\cdots,n-1\}  \text{ is $T$-irreducible} \right\} = \left\{ p_N: 0\leq N<T_n \right\}
+\]
+\end{theorem}
+\begin{proof}
+Let $L$ be the set on the left-hand side of the equation. By \Cref{thm 4}, $L$ is the set of $p_{\text{sum}(S)}$ for all irreducible sets $S\subset\{0,1,\cdots,n-1\}$. By \Cref{thm 1}, the irreducible $T$-decomposition of $N$ contains an element greater than or equal to $n$ if and only if $N\geq T_n$. Hence $L=\left\{ p_N: 0\leq N<T_n \right\}$.
+\end{proof}
+
+\begin{theorem}
+\label{thm 5} The Tribonacci domain can be characterized as
+\[ 
+T = \left\{ \sum_{n\in S}v_n:\ S\subset \mathbb{N}  \text{ is finite and $T$-irreducible} \right\}
+\]
+\end{theorem}
+\begin{proof}
+The given set is the union of sets given in \cref{thm 5-1} over all $n\in \mathbb{N}$, which finishes the proof.
+\end{proof}
+
+\begin{theorem}
+\label{thm 6}
+For any $N\in\mathbb{N}$ and any $T$-representation $S$ of $N$, \[ p_N=\sum_{i\in S} v_i\]
+\end{theorem}
+\begin{proof}
+Applying the algorithm given in \cref{thm 2} to $S$ doesn't change the sum $\sum_{i\in S}v_i$ because $v_n+v_{n+1}+v_{n+2}=v_{n+3}$ by \cref{thm 3}. Hence the result follows from \Cref {thm 4}. 
+\end{proof}
+
+\begin{theorem}
+\label{thm 7}
+The Tribonacci domain can be characterized as
+\[ T = \left\{ \sum_{n\in S}v_n:\ S\subset \mathbb{N}  \text{ is finite}\right\}\]
+\end{theorem}
+\begin{proof}
+The set in \cref{thm 5} is obviously a subset of the set given here. However \cref{thm 6} shows that all elements of the set given here are $p_N\in T$ for some $N\in \mathbb{N}$, finishing the proof.
+\end{proof}
+
+
+\section{Layers of the Rauzy Fractal}
+
+Using elementary calculus, it is easily shown that the polynomial $t^3-t^2-t-1$, the characteristic polynomial of the linear recurrence $T_{n+3}=T_{n+2}+T_{n+1}+T_n$, has exactly one real root $\lambda$, and $\lambda >1$. Hence $t^3-t^2-t-1$ has two non-real complex roots $\mu$ and $\bar\mu$, which are complex conjugates. $\lambda\mu\bar{\mu}=1$ shows $|\mu|=\sqrt{\mu\bar{\mu}}=\lambda^{-1/2}<1$. 
+
+\begin{lemma}
+\label{thm 8-0}
+There are $\alpha\in\mathbb{R}$ and $\beta, \ \gamma\in \mathbb{C}$ such that $T_n=\alpha\lambda^n+\beta\mu^n+\gamma \bar{\mu}^n$ for any integer $n\geq -3$.
+\end{lemma}
+\begin{proof}
+Since $\lambda, \mu, \bar{\mu}$ are the distinct roots of $t^3-t^2-t-1$, there are $\alpha, \beta, \gamma\in\mathbb{C}$ satisfying the equation given in the theorem. Because $T_n\in\mathbb{R}$ and $\mu^n\rightarrow0$ as $n\rightarrow\infty$, denoting by $\text{Im}(z)$ the imaginary part of $z\in\mathbb{C}$,
+ \[
+0=\lim_{n\rightarrow\infty} \text{Im}(T_n)= \lim_{n\rightarrow\infty}\text{Im}(\alpha)\lambda^n
+\]
+which shows $\text{Im}(\alpha)=0$ as $\lambda>1$.
+\end{proof}
+
+We will project the Tribonacci domain orthogonally to obtain a bounded two-dimensional region. The intuition behind the following definition is that 
+\(
+v_n=(T_{n-1}, T_{n-2}, T_{n-3})
+\)
+tends to become almost parallel to $(\lambda^2, \lambda, 1)$ as $n\rightarrow \infty$.
+
+\begin{definition}
+We denote $v_\infty:=(\lambda^2, \lambda, 1)\in \mathbb{R}^3$. The plane passing through the origin having a normal vector $v_\infty$ is defined as the \textbf{contracting plane}. For any $v\in \mathbb{R}^3$, we let $v'$ be the orthogonal projection of $v$ onto the contracting plane. In symbols,  \[v':=v-\frac{v\cdot v_\infty}{\|v_\infty \|^2}v_\infty\] 
+\end{definition}
+
+\begin{example}
+Since $v_n=T_{n-1}e_0+T_{n-2}e_1+T_{n-3}e_2$ by \cref{thm 3-1}, $v_n'=T_{n-1}e_0'+T_{n-2}e_1'+T_{n-3}e_2'$. The orthogonal projection of $\lambda^2e_0+\lambda e_1+e_2=v_\infty$ onto the contracting plane is the zero vector, so $\lambda^2e_0'+\lambda e_1'+e_2'=0$.
+\end{example}
+
+\begin{definition}
+    The orthogonal projection of the Tribonacci domain onto the contracting plane is called the \textbf{Rauzy domain}, which we denote by $R$. In symbols, \[R=\{p_N':N\in \mathbb{N}\}\subset \mathbb{R}^3\]
+\end{definition}
+
+\begin{theorem}
+    \label{thm 8}
+    There is a constant $C>0$ such that $\|v_n' \|<C\lambda^{-n/2}$ for all $n\in \mathbb{N}$.
+\end{theorem}
+\begin{proof}
+Using \cref{thm 8-0} and $v_n'=T_{n-1}e_0'+T_{n-2}e_1'+T_{n-3}e_2'$,
+\[
+v_n'=\alpha\lambda^{n-3}(\lambda^2e_0'+\lambda e_1'+e_2') + \beta\mu^{n-3}(\mu^2e_0'+\mu e_1'+e_2')+\gamma\bar{\mu}^{n-3}(\bar{\mu}^2e_0'+\bar{\mu} e_1'+e_2')
+\]
+Here the first term vanishes, and the second and third terms have norm $|\mu|^{n}=\lambda^{-n/2}$ times a fixed number, finishing the proof.
+\end{proof}
+
+\begin{theorem}
+\label{thm 9}
+    The Rauzy domain $R$ is bounded.
+\end{theorem}
+\begin{proof}
+\cref{thm 8} and $0<\lambda^{-1/2}<1$ shows that the infinite series \(\sum_{n=0}^\infty \|v_n'\| \) converges. \cref{thm 7} and the triangle inequality shows that all vectors in $R$ has norm no greater than \(\sum_{n=0}^\infty \|v_n'\| \).
+\end{proof}
+
+By introducing the next definition, which can be interpreted as translating each layer to obtain the next layer, we seek an elegant geometric interpretation of the Rauzy domain. The notation $S_1+S_2$ means $\{s_1+s_2:s_1\in S_1,  s_2\in S_2\}$.
+
+
+\begin{definition}
+    We define the \textbf{$n$\textsuperscript{th} layer} $L_n$ inductively as $L_0=\{0\}$ and
+    \begin{center}
+        $L_{n+1}=L_n+\{0, v_{3n}', v_{3n+1}', v_{3n+1}'+v_{3n}',v_{3n+2}', v'_{3n+2}+v_{3n}',v_{3n+2}'+v'_{3n+1}\}$
+    \end{center}
+\end{definition}
+\begin{theorem}
+\label{thm 10}
+For any $n\in \mathbb{N}$, $L_n=\{p_N':0\leq N< T_{3n}\}$. In particular, $\bigcup_{n=0}^\infty L_n=R$.
+\end{theorem}
+\begin{proof}
+    From the definition of $L_n$, it is easy to show by induction that \[
+    L_n=\left\{\sum_{k\in S}v'_k : S\subset\{0,1,\cdots,3n-1\}, \forall 0\leq k\leq n-1:\{3k, 3k+1, 3k+2\} \not\subset S \right\}
+    \]
+    Since $L_n$ is contained in the projection of the set in \Cref{thm 5-1} (with $n$ replaced by $3n$) onto the contracting plane, $L_n\subseteq \{p_N':0\leq N< T_{3n}\}$. For the converse direction, \Cref{thm 6} shows that $L_n$ is exactly the set of $p'_{\text{sum}(S)}$ for each $S$ satisfying the condition given in $L_n$. The conclusion follows since \Cref{lemma} shows that each $S$ satisfying the condition given in $L_n$ has $\text{sum}(S)<T_{3n}$. 
+\end{proof}
+
+We now prove that $L_n$ is a good approximation to $R$ when $n$ is large. This result can be applied to plotting the Rauzy domain with a computer, since we can know the asymptotic error bound when plotting $L_n$.
+
+\begin{theorem}
+\label {thm 11}
+There is a constant $C>0$ such that for any $n\in\mathbb{N}$ and any vector $p\in R$, there is a vector $q\in L_n$ with $\| p-q\|<C\lambda^{-3n/2}$.
+\end{theorem}
+
+\begin{proof}
+Let $p=p_N'(N\in\mathbb{N})$ and let $S$ be the irreducible $T$-decomposition of $N$. $p=\sum_{k\in S}v_k'$ by \cref{thm 4}. For $S'=S\cap\{0,1,\cdots,3n-1\}$, $q=\sum_{k\in S'}v_k'\in L_n$ by definition. Because $p-q$ is a sum of some vectors among $v_{k}'(k\geq 3n)$, the triangle inequality and \cref{thm 8} shows that
+\[
+\|p-q\|\leq\sum_{k\geq 3n}\|v_k' \|\leq\sum_{k\geq 3n}C'\lambda^{-k/2}=\frac{C'}{1-\lambda^{-1/2}}\lambda^{-3n/2}
+\]
+where $C'$ is the constant in \cref{thm 8}. Hence the statement holds for $C=C'/(1-\lambda^{-1/2})$ .
+\end{proof}
+
+\end{document}
