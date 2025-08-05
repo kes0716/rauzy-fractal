@@ -289,7 +289,7 @@ For any $n\in \mathbb{N}$, $L_n=\{u_N':0\leq N< T_{3n}\}$. In particular, $\bigc
     From the definition of $L_n$, it is easy to show by induction that \[
     L_n=\left\{\sum_{k\in S}v'_k : S\subset\{0,1,\cdots,3n-1\}, \forall 0\leq k\leq n-1:\{3k, 3k+1, 3k+2\} \not\subset S \right\}
     \]
-    Since $L_n$ is contained in the projection of the set in \Cref{thm 5-1} (with $n$ replaced by $3n$) onto the contracting plane, $L_n\subseteq \{u_N':0\leq N< T_{3n}\}$. For the converse direction, \Cref{thm 6} shows that $L_n$ is exactly the set of $p'_{\text{sum}(S)}$ for each $S$ satisfying the condition given in $L_n$. The conclusion follows since \Cref{lemma} shows that each $S$ satisfying the condition given in $L_n$ has $\text{sum}(S)<T_{3n}$. 
+    Since $L_n$ is contained in the projection of the set in \Cref{thm 5-1} (with $n$ replaced by $3n$) onto the contracting plane, $L_n\subseteq \{u_N':0\leq N< T_{3n}\}$. For the converse direction, \Cref{thm 6} shows that $L_n$ is exactly the set of $p'_{\text{sum}(S)}$ for each $S$ satisfying the condition given in $L_n$. The conclusion follows since \Cref{lemma} (with $n$ replaced by $3n$) shows that each $S$ satisfying the condition given in $L_n$ has $\text{sum}(S)<T_{3n}$. 
 \end{proof}
 
 We now prove that $L_n$ is a good approximation to $R$ when $n$ is large. This result can be applied to plotting the Rauzy domain with a computer, since we can know the asymptotic error bound when plotting $L_n$.
@@ -415,7 +415,7 @@ $\overline{\bigcup_{n\in S}D_n}\subseteq\overline{D}$ is obvious. For the opposi
 \begin{example}
 Consider the substitution given by $\sigma(0)=01, \sigma(1)=02, \sigma(2)=0$; that is, roles of $0$ and $1$ reversed in the Tribonacci substitution. With computation for small $n$ and a slight modification of \cref{thm 11}, it is not hard to see that the vector corresponding to the word $0$ is in $\overline{D}$ but not in $\overline{\bigcup_{n\geq1}D_n}$. Hence \cref{t4} can be false for arbitrary Pisot substitutions. It is tempting to conjecture that \cref{t4} will be true up to exception of finitely many points(that is, $\overline{D}\setminus\overline{\bigcup_{n\in S}D_n}$ is finite), which we did not prove yet.
 \end{example}
-
+Although our argument works for a limited class of Pisot substitutions, the next lemma and its corollary show that \cref{t4} is true for a quite wide range of substitutions; indeed, at least one such substitution exists if we are given a Pisot matrix.
 \begin{lemma}
 \label{l5}
 For any Pisot matrix $M$, there is a substitution $\sigma$ with associated matrix $M$ such that the initial letter of $w_T$ is $0$ for some positive integer $T$.
