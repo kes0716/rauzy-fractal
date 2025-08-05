@@ -14,20 +14,18 @@
 \newtheorem*{remark}{Remark}
 \newtheorem*{definition}{Definition}
 \newtheorem*{example}{Example}
-\predisplaypenalty=0
-\postdisplaypenalty=0
-\abovedisplayskip=12pt plus 3pt minus 9pt
-\belowdisplayskip=12pt plus 3pt minus 9pt
+\hypersetup{citecolor=red}
 
-\title{\textbf{Decomposition of Tribonacci Words and Rauzy Fractal}}
+\title{\textbf{From Tribonacci to Pisot Substitutions}}
 \author{Eunseong Kim}
-\date{August 2, 2025}
+\date{August 5, 2025}
 
 \begin{document}
 
 \maketitle
 
 \section{Tribonacci Sequence}
+\label{sec1}
 
 We first define the Tribonacci sequence. Hereafter, the set of natural numbers $\mathbb{N}=\{0,1,2,\cdots,\}$ includes zero.
 
@@ -37,14 +35,14 @@ The \textbf{Tribonacci sequence} is the infinite sequence $\{T_n \}_{n=0}^{\inft
 For convenience, we define $T_{n}=0(n\leq -2)$ and $T_{-1}=1$.
 \end{definition}
 
-By definition, the recurrence holds for all integers $n\geq -3$. We will be concerned with representing a natural number as a sum of elements of the Tribonacci sequence.
+It is obvious that the Tribonacci sequence is a strictly increasing integer sequence. By the definition of $T_n$ for negative indices $n$, the recurrence relation holds for all integers $n\geq -3$. We will be concerned with representing a natural number as a sum of elements of the Tribonacci sequence.
 
 \begin{definition} For a finite set $S\subset \mathbb{N}$, we define
 \[\text{sum}(S):=\sum_{n\in S} T_n\]
 and say that $S$ is a \textbf{$T$-decomposition} of $\text{sum}(S)$.
 \end{definition}
 
-Note that the recurrence for the Tribonacci sequence implies that three consecutive integers $n, n+1, n+2\in S$ can be replaced by $n+3$ without changing $\text{sum}(S)$. We will establish some results about $T$-decompositions without any three consecutive integers. The results are essentially the same as those in section 10.7 of \textit{Lothaire, Applied Combinatorics on Words, 2004}, but the notation is different for higher clarity.
+Note that the recurrence for the Tribonacci sequence implies that three consecutive integers $n, n+1, n+2\in S$ can be replaced by $n+3$ without changing $\text{sum}(S)$. We will establish some results on $T$-decompositions without any three consecutive integers. The results are essentially the same as those in \cite{cow}, but the notation is different for improved clarity.
 
 \begin{definition}
 We say that $S\subset \mathbb{N}$ is \textbf{irreducible} if $\{n,n+1,n+2\} \not\subset S$ for any $n\in \mathbb{N}$.
@@ -52,7 +50,7 @@ We say that $S\subset \mathbb{N}$ is \textbf{irreducible} if $\{n,n+1,n+2\} \not
 
 \begin{lemma}
 \label{lemma}
-For any $n\in \mathbb{N}$, the maximum value of $\text{sum}(S)$ for $S\subset\{0,1,\cdots,n-1\}$ under the condition $\forall k\geq 1,  \{n-3k+2, n-3k+1, n-3k\}\not\subset S$ is $T_n-1$, which is obtained when $S=\{k: 0\leq k\leq n-1, 3\nmid n-k\}$.
+For any $n\in \mathbb{N}$, the maximum value of $\text{sum}(S)$ for $S\subset\{0,1,\cdots,n-1\}$ under the condition $\forall k\geq 1,  \{n-3k+2, n-3k+1, n-3k\}\not\subset S$ is $T_n-1$, which is obtained when $S=\{m: 0\leq m\leq n-1, 3\nmid n-m\}$.
 \end{lemma}
 \begin{proof}
 Since
@@ -63,7 +61,7 @@ and the sets
 \(
   \{n-3k+2, n-3k-1, n-3k\}
 \)
-are disjoint for \( k \in \mathbb{N} \), it follows that $\text{sum}(S)$ is maximized when choosing $n-3k+2$ and $n-3k+1$ $(k\in \mathbb{N})$ as elements of $S$ (of course, not choosing negative integers). $\text{sum} \left(\left\{k: 0\leq k\leq n-1, 3\nmid n-k \right\} \right)=T_n-1$ is immediate from induction on $n$; $n\leq2$ can be verified by hand, and the equation for $n\geq3$ reduces to $n-3$ because $T_n-1=T_{n-1}+T_{n-2}+\left(T_{n-3}-1 \right)$. 
+are disjoint for \( k \in \mathbb{N} \), it follows that $\text{sum}(S)$ is maximized when choosing $n-3k+2$ and $n-3k+1$ $(k\in \mathbb{N})$ as elements of $S$ (of course, not choosing negative integers). $\text{sum} \left(\left\{m: 0\leq m\leq n-1, 3\nmid n-m\right\} \right)=T_n-1$ is immediate from induction on $n$; $n\leq2$ can be verified by hand, and the equation for $n\geq3$ reduces to $n-3$ because $T_n-1=T_{n-1}+T_{n-2}+\left(T_{n-3}-1 \right)$. 
 \end{proof}
 
 \begin{theorem}
@@ -71,128 +69,128 @@ are disjoint for \( k \in \mathbb{N} \), it follows that $\text{sum}(S)$ is maxi
 \end{theorem}
 
 \begin{proof}
-We use induction on $n\in\mathbb{N}$ to prove that the statement holds for $N<T_{n}$. If $n=0$, $N=0$, $S=\emptyset$ and the statement holds. Suppose $n\geq 1$ and the statement holds for smaller $n$. We already proved for $N<T_{n-1}$, so assume $T_{n-1}\leq N<T_n$. If the irreducible set $S$ does not contain $n-1$, $\text{sum}(S)\leq T_{n-1}-1<N$ by \cref{lemma}. Hence $n-1\in S$.
+We use induction on $n\in\mathbb{N}$ to prove that the statement holds for $N<T_{n}$. If $n=0$, we have $N=0$, $S=\emptyset$, and the statement clearly holds. Suppose $n\geq 1$ and the statement holds for smaller $n$. We already proved for $N<T_{n-1}$, so assume $T_{n-1}\leq N<T_n$. If the irreducible set $S$ does not contain $n-1$, $\text{sum}(S)\leq T_{n-1}-1<N$ by \cref{lemma}. Hence $n-1\in S$.
 \[
 N-T_{n-1}<T_n-T_{n-1}=T_{n-2}+T_{n-3}\leq T_{n-2}+T_{n-3}+T_{n-4}=T_{n-1}
 \]
-so the induction hypothesis applies to prove that there is a unique irreducible decomposition $S'\subset\mathbb{N}$ of $N-T_{n-1}$. Since $T_{n-1}=T_{n-2}+T_{n-3}+T_{n-4}>\text{sum}(S')$, $S'\subset\{0,1,\cdots,n-2\}$ and $\{n-4, n-3, n-2\}\not\subset S$. Hence $S=S'\cup\{n-1\}$ is an irreducible $T$-decomposition of $N$. Conversely $S\setminus\{n-1\}$ must be an irreducible $T$-decomposition of $N-T_{n-1}$, proving uniqueness.  
+so the induction hypothesis applies, proving that there is a unique irreducible decomposition $S'\subset\mathbb{N}$ of $N-T_{n-1}$. Since $T_{n-1}=T_{n-2}+T_{n-3}+T_{n-4}>\text{sum}(S')$, $S'\subset\{0,1,\cdots,n-2\}$ and $\{n-4, n-3, n-2\}\not\subset S'$. Hence $S=S'\cup\{n-1\}$ is an irreducible $T$-decomposition of $N$. Conversely, $S\setminus\{n-1\}$ must be an irreducible $T$-decomposition of $N-T_{n-1}$, proving uniqueness.  
 \end{proof}
 
-The next result is a lemma used for proving \cref{thm 6} and \cref{thm 7} on Tribonacci words.
+The next result is a lemma used to prove \cref{thm 6} and \cref{thm 7} on Tribonacci words.
 
 \begin{lemma}
 \label{thm 2}
 Let \( S \) be a \( T \)-representation of \( N \in \mathbb{N} \).  
-While there exists \( n \in \mathbb{N} \) such that \( \{n, n+1, n+2\} \subset S \), take maximum among such $n$ and replace $ n, n+1, n+2  $ with \( n+3 \) in \( S \).  
-Then this process terminates with \( S \) the irreducible \( T \)-representation of \( N \).
+If there exists \( n \in \mathbb{N} \) such that \( \{n, n+1, n+2\} \subset S \), take the maximum such $n$ and replace $ n, n+1, n+2  $ with \( n+3 \) in \( S \).  
+Repeating this process terminates with \( S \) being the irreducible \( T \)-representation of \( N \).
 \end{lemma}
 
 \begin{proof}
-By maximality of $n$, $n+3\notin S$ at each step of the process, so $\text{sum}(S)$ changes by $T_{n+3}-(T_n+T_{n+1}+T_{n+2})=0$, so $\text{sum}(S)=N$ at any moment during the process. Furthermore $|S|$ decreases by $2$ each step, so the process eventually terminates. At termination, there is no $n\in\mathbb{N}$ with $\{n,n+1,n+2\}\subset S$; that is, $S$ is irreducible.
+By maximality of $n$, $n+3\notin S$ at each step of the process, so $\text{sum}(S)$ changes by $T_{n+3}-(T_n+T_{n+1}+T_{n+2})=0$. Hence $\text{sum}(S)=N$ at any moment during the process. Furthermore $|S|$ decreases by $2$ each step, so the process eventually terminates. At termination, there is no $n\in\mathbb{N}$ with $\{n,n+1,n+2\}\subset S$; that is, $S$ is irreducible.
 \end{proof}
 
 \section{Tribonacci Words}
+\label{sec2}
 
-We will now be considered with finite sequences consisting of $0, 1, 2$.
+We will now be concerned with finite sequences consisting of $0, 1, 2$.
 \begin{definition}
-For a set $S$, a \textbf{word in $S$} is a finite sequence consisting of elements in $S$. If a word $W$ has elements $s_1, s_2, \cdots, s_n$ ($n\in \mathbb{N}$, $s_i\in S$) in order, we write  $W=s_1s_2\cdots s_n$, and define its \textbf{length}, denoted $|W|$, as $n$. A \textbf{prefix of $W$} is a word $s_1s_2\cdots s_k$ for any $0\leq k\leq n$. For $W=s_1s_2\cdots s_n$ and $W'=t_1t_2\cdots t_m$, we define the \textbf{concatenation of $W$ and $W'$}, denoted $WW'$, as the word $s_1s_2\cdots s_nt_1t_2\cdots t_m$. 
+For a set $S$, a \textbf{word in $S$} is a finite sequence consisting of elements in $S$. If a word $W$ has elements $s_1, s_2, \cdots, s_n$ ($n\in \mathbb{N}$, $s_i\in S$) in order, we write  $W=s_1s_2\cdots s_n$, and define its \textbf{length}, denoted $|W|$, as $n$. A \textbf{prefix of $W$} is a word $s_1s_2\cdots s_k$ for any $0\leq k\leq n$. For $W=s_1s_2\cdots s_n$ and $W'=t_1t_2\cdots t_m$, we define the \textbf{concatenation of $W$ and $W'$}, denoted $WW'$, as the word $s_1s_2\cdots s_nt_1t_2\cdots t_m$.
 \end{definition}
 
 \begin{example}
-$W_1=0102010$, $W_2=0102$, $W_3=01$ are words in $\{0,1,2\}$. Because concatenation operation is associative, we denote $(W_1W_2)W_3=W_1(W_2W_3)$ as $W_1W_2W_3=0102010010201$. Because we are talking exclusively about words in the set $\{0,1,2\}$, hereafter we will omit the phrase ``in $\{0,1,2\}$''. The empty string, $0$, $01$ are all prefixes of $W_3$.
+$W_1=0102010$, $W_2=0102$, $W_3=01$ are words in $\{0,1,2\}$. Because concatenation is associative, we denote $(W_1W_2)W_3=W_1(W_2W_3)$ simply as $W_1W_2W_3=0102010010201$. Because we are considering only words in the set $\{0,1,2\}$, hereafter we will omit the phrase ``in $\{0,1,2\}$''. The empty string, $0$, $01$ are all prefixes of $W_3$.
 \end{example}
 
 \begin{definition}
 For a word $W$, let $a_i$ be the number of $i$ in $W$ for $i=0,1,2$. The three-dimensional vector $a_0e_0+a_1e_1+a_2e_2=(a_0, a_1, a_2)$ is the \textbf{vector corresponding to $W$}. Hereafter $e_0=(1,0,0)$, $e_1=(0,1,0)$, $e_2=(0,0,1)$ are the standard unit vectors of $\mathbb{R}^3$.
 \end{definition}
 \begin{definition}
-Let $\mathscr{W}$ be the set of all words. A function $\sigma: \mathscr{W}\rightarrow \mathscr{W}$ is a \textbf{substitution} if $\sigma(ab)=\sigma(a)\sigma(b)$ for any two words $a$ and $b$.
+Let $\mathcal{W}$ be the set of all words. A function $\sigma: \mathcal{W}\rightarrow \mathcal{W}$ is a \textbf{substitution} if $\sigma(W_1W_2)=\sigma(W_1)\sigma(W_2)$ for any two words $W_1$ and $W_2$.
 \end{definition}
 
 The next theorem, which is intuitively obvious, shows that we can \textit{define} a substitution by specifying its values at $0$, $1$, $2$.
 
 \begin{theorem}
-For any three words $a_0, a_1, a_2$, there is a unique substitution $\sigma$ with $\sigma(i)=a_i$ for $i=0,1,2$. Furthermore, $\sigma(s_1s_2\cdots s_n)=a_{s_1}a_{s_2}\cdots a_{s_n}$ for any $s_1, s_2, \cdots, s_n\in\{0,1,2\}$. The vector corresponding to $w_n$ is denoted $v_n$.
+For any three words $a_0, a_1, a_2$, there is a unique substitution $\sigma$ with $\sigma(i)=a_i$ for $i=0,1,2$. Furthermore, $\sigma(s_1s_2\cdots s_n)=a_{s_1}a_{s_2}\cdots a_{s_n}$ for any $s_1, s_2, \cdots, s_n\in\{0,1,2\}$. The vector corresponding to $t_n$ is denoted $b_n$.
 \end{theorem}
 \begin{proof}
 From the definition of concatenation of words, $\sigma$ is a substitution. Uniqueness of $\sigma$ can be proved by a straightforward induction on $n$.
 \end{proof}
 
-Now we define a special kind of substitution. The rest of this paper will be about Rauzy substitutions.
+Now we define a special kind of substitution. The rest of \cref{sec2} and all of \cref{sec3} will be about Tribonacci substitutions.
 
 \begin{definition}
-The substitution $\sigma$ defined as $\sigma(0)=01$, $\sigma(1)=02$, $\sigma(2)=0$ is called the \textbf{Rauzy substitution}.
+The substitution $\tau$ defined as $\tau(0)=01$, $\tau(1)=02$, $\tau(2)=0$ is called the \textbf{Tribonacci substitution}.
 \end{definition}
 
 \begin{definition}
-For any $n\in \mathbb{N}$, the word $w_n:=\sigma^n(0)$, where the superscript $n$ denotes composing $\sigma$ with itself $n$ times, is called the \textbf{$n$\textsuperscript{th} Tribonacci word}. 
+For every $n\in \mathbb{N}$, the word $t_n:=\tau^n(0)$, where the superscript $n$ denotes composing $\tau$ with itself $n$ times, is called the \textbf{$n$th Tribonacci word}. We denote by $b_n$ the vector corresponding to $w_n$.
 \end{definition}
 \begin{example}
 It is straightforward from the definitions that
-\[ w_0=0,  \ w_1=01,\ w_2=0102, \ w_3=0102010\]
-\[ v_0=(1, 0, 0),  \ v_1=(1, 1, 0),\ v_2=(2, 1, 0), \ v_3=(4, 2, 1)\]
+\[ t_0=0,  \ t_1=01,\ t_2=0102, \ t_3=0102010\]
+\[ b_0=(1, 0, 0),  \ b_1=(1, 1, 0),\ b_2=(2, 1, 0), \ b_3=(4, 2, 1)\]
 \end{example}
 
-The next theorem, which can be viewed as an alternate definition of Tribonacci words, explains why $w_n$ are called Tribonacci words.
+The next theorem, which can be viewed as an alternate definition of Tribonacci words, explains why $t_n$ are called Tribonacci words.
 
 \begin{theorem}
 \label{thm 3}
-For any $n\in \mathbb{N}$, $w_{n+3}=w_{n+2}w_{n+1}w_n$.
+For any $n\in \mathbb{N}$, $t_{n+3}=t_{n+2}t_{n+1}t_n$.
 \end{theorem}
 \begin{proof}
-The statement is true for $n=0$. If the statement is true for some $n$, $w_{n+4}=\sigma(w_{n+3})=\sigma(w_{n+2})\sigma(w_{n+1})\sigma(w_{n})=w_{n+3}w_{n+2}w_{n+1}$.
+We use induction on $n$. The statement is true for $n=0$. If the statement is true for some $n$, $t_{n+4}=\tau(t_{n+3})=\tau(t_{n+2})\tau(t_{n+1})\tau(t_{n})=t_{n+3}t_{n+2}t_{n+1}$.
 \end{proof}
 
 \begin{theorem}
 \label{thm 3-1}
-For any $n\in \mathbb{N}$, $v_n=( T_{n-1}, T_{n-2}, T_{n-3})$ and $|w_n|=T_n$.
+For any $n\in \mathbb{N}$, $b_n=( T_{n-1}, T_{n-2}, T_{n-3})$ and $|t_n|=T_n$.
 \end{theorem}
 \begin{proof}
-The statement is true for $n\leq2$. \cref{thm 3} shows that the number of $0, 1, 2$ in $w_n$ each satisfies the recurrence relation of the Tribonacci sequence.
+The statement is true for $n\leq2$. \cref{thm 3} shows that the number of $0, 1, 2$ in $t_n$ each satisfies the recurrence relation of the Tribonacci sequence.
 \end{proof}
 
 \begin{theorem}
 \label{thm 3-2}
-For any $N\in \mathbb{N}$, let $m$ be the smallest nonnegative integer such that $|w_m|\geq N$. Then for all $n\geq m$, the prefix of $w_n$ of length $N$ is the same.
+For any $N\in \mathbb{N}$, let $m$ be the smallest nonnegative integer such that $|t_m|\geq N$. Then for all $n\geq m$, the prefix of $t_n$ of length $N$ is the same.
 \end{theorem}
 \begin{proof}
-By \cref{thm 3} and direct verification for $n\leq2$, $w_n$ is a prefix of $w_{n+1}$ for any $n\in \mathbb{N}$. Hence $w_m$ is a prefix of $w_n$ for $n\geq m$, finishing the proof.
+By \cref{thm 3} and direct verification for $n\leq1$, $t_n$ is a prefix of $t_{n+1}$ for any $n\in \mathbb{N}$. Hence $t_m$ is a prefix of $t_n$ for $n\geq m$, which finishes the proof.
 \end{proof}
 
-\cref{thm 3-2} and $\lim_{n\rightarrow\infty}T_n=\infty$ enables the following definition.
+\cref{thm 3-2} and $\lim_{n\rightarrow\infty}T_n=\infty$ enable the following definition.
 
 \begin{definition}
-For any $N\in\mathbb{N}$, $p_N\in \mathbb{R}^3$ is the vector corresponding to the prefix of $w_n$ ($|w_n|\geq N$) of length $N$. $T=\{p_N:N\in \mathbb{N}\}\subset \mathbb{R}^3$  is the \textbf{Tribonacci domain}.
+For any $N\in\mathbb{N}$, $u_N\in \mathbb{R}^3$ is the vector corresponding to the prefix of $t_n$ ($|t_n|\geq N$) of length $N$. $T=\{u_N:N\in \mathbb{N}\}\subset \mathbb{R}^3$  is the \textbf{Tribonacci domain}.
 \end{definition}
-For example, $(0,0,0) (1,0,0), (1,1,0), (2,1,0), (2,1,1)$ are elements of $T$. We will now investigate ways to express $T$ using sums of the word vectors $v_n$, which rely on the results established on sums of elements of the Tribonacci sequence. The results here are essentially the same as those in section 10.8 of \textit{Lothaire, Applied Combinatorics on Words, 2004}, but the proofs here show clearer relevance to the properties of the Tribonacci sequence.
+For example, $(0,0,0),\ (1,0,0),\ (1,1,0),\ (2,1,0),\ (2,1,1)$ are elements of $T$. We will now investigate ways to express $T$ using sums of the word vectors $b_n$, which rely on the results established on sums of elements of the Tribonacci sequence. The results here are essentially the same as those in \cite{cow}, but the proofs here show clearer relevance to the properties of the Tribonacci sequence.
 \begin{theorem}
 \label{thm 4}
-For any $N\in\mathbb{N}$ and the irreducible $T$-representation $S$ of $N$, \[ p_N=\sum_{i\in S} v_i\]
+For any $N\in\mathbb{N}$ and the irreducible $T$-representation $S$ of $N$, \[ u_N=\sum_{n\in S} b_n\]
 \end{theorem}
 \begin{proof}
-We use induction as in \cref{thm 1}, with the base case verified easily. Let us prove the inductive step assuming $T_{n-1}\leq N<T_n(n\geq 1)$. \cref{thm 3} shows \[p_N=\begin{cases}
-    p_{T_{n-1}}+p_{N-T_{n-1}}, &T_{n-1}\leq N<T_{n-1}+T_{n-2}\\ 
-    p_{T_{n-1}}+p_{T_{n-2}}+p_{N-T_{n-1}-T_{n-2}} &T_{n-1}+T_{n-2}\leq N<T_{n}
+We use induction as in \cref{thm 1}, with the base case easily verified. Let us prove the inductive step assuming $T_{n-1}\leq N<T_n(n\geq 1)$. \cref{thm 3} shows \[u_N=\begin{cases}
+    u_{T_{n-1}}+u_{N-T_{n-1}}, &T_{n-1}\leq N<T_{n-1}+T_{n-2}\\ 
+    u_{T_{n-1}}+u_{T_{n-2}}+u_{N-T_{n-1}-T_{n-2}} &T_{n-1}+T_{n-2}\leq N<T_{n}
 \end{cases}\]
-By \cref{thm 1}, we have $n-1\in S, n-2\notin S$ in the first case and $n-1\in S, n-2\in S$ in the second case, completing the proof by applying the induction hypothesis to the set $S\setminus\{n-1, n-2\}$.
-
+By \cref{thm 1}, we have $n-1\in S,\ n-2\notin S$ in the first case and $n-1\in S,\ n-2\in S$ in the second case, completing the proof by applying the induction hypothesis to the set $S\setminus\{n-1, n-2\}$.
 \end{proof}
 
 \begin{theorem}
 \label{thm 5-1}
 For any $n\in\mathbb{N}$,
 \[
-\left\{ \sum_{k\in S}v_k:\ S\subset \{0,1,\cdots,n-1\}  \text{ is $T$-irreducible} \right\} = \left\{ p_N: 0\leq N<T_n \right\}
+\left\{ \sum_{k\in S}b_k:\ S\subset \{0,1,\cdots,n-1\}  \text{ is $T$-irreducible} \right\} = \left\{ u_N: 0\leq N<T_n \right\}
 \]
 \end{theorem}
 \begin{proof}
-Let $L$ be the set on the left-hand side of the equation. By \Cref{thm 4}, $L$ is the set of $p_{\text{sum}(S)}$ for all irreducible sets $S\subset\{0,1,\cdots,n-1\}$. By \Cref{thm 1}, the irreducible $T$-decomposition of $N$ contains an element greater than or equal to $n$ if and only if $N\geq T_n$. Hence $L=\left\{ p_N: 0\leq N<T_n \right\}$.
+Let $L$ be the set on the left-hand side of the equation. By \Cref{thm 4}, $L$ is the set of $u_{\text{sum}(S)}$ for all irreducible sets $S\subset\{0,1,\cdots,n-1\}$. By \Cref{thm 1}, the irreducible $T$-decomposition of $N$ contains an element greater than or equal to $n$ if and only if $N\geq T_n$. Hence $L=\left\{ u_N: 0\leq N<T_n \right\}$.
 \end{proof}
 
 \begin{theorem}
 \label{thm 5} The Tribonacci domain can be characterized as
 \[ 
-T = \left\{ \sum_{n\in S}v_n:\ S\subset \mathbb{N}  \text{ is finite and $T$-irreducible} \right\}
+T = \left\{ \sum_{n\in S}b_n:\ S\subset \mathbb{N}  \text{ is finite and $T$-irreducible} \right\}
 \]
 \end{theorem}
 \begin{proof}
@@ -201,23 +199,24 @@ The given set is the union of sets given in \cref{thm 5-1} over all $n\in \mathb
 
 \begin{theorem}
 \label{thm 6}
-For any $N\in\mathbb{N}$ and any $T$-representation $S$ of $N$, \[ p_N=\sum_{i\in S} v_i\]
+For any $N\in\mathbb{N}$ and any $T$-representation $S$ of $N$, \[ u_N=\sum_{n\in S} b_n\]
 \end{theorem}
 \begin{proof}
-Applying the algorithm given in \cref{thm 2} to $S$ doesn't change the sum $\sum_{i\in S}v_i$ because $v_n+v_{n+1}+v_{n+2}=v_{n+3}$ by \cref{thm 3}. Hence the result follows from \Cref {thm 4}. 
+Applying the algorithm given in \cref{thm 2} to $S$ doesn't change the sum $\sum_{n\in S}b_n$ because $b_n+b_{n+1}+b_{n+2}=b_{n+3}$ by \cref{thm 3}. Hence the result follows from \Cref {thm 4}. 
 \end{proof}
 
 \begin{theorem}
 \label{thm 7}
 The Tribonacci domain can be characterized as
-\[ T = \left\{ \sum_{n\in S}v_n:\ S\subset \mathbb{N}  \text{ is finite}\right\}\]
+\[ T = \left\{ \sum_{n\in S}b_n:\ S\subset \mathbb{N}  \text{ is finite}\right\}\]
 \end{theorem}
 \begin{proof}
-The set in \cref{thm 5} is obviously a subset of the set given here. However \cref{thm 6} shows that all elements of the set given here are $p_N\in T$ for some $N\in \mathbb{N}$, finishing the proof.
+The set in \cref{thm 5} is obviously a subset of the set given here. However \cref{thm 6} shows that all elements of the set given here are $u_N\in T$ for some $N\in \mathbb{N}$, finishing the proof.
 \end{proof}
 
 
 \section{Layers of the Rauzy Fractal}
+\label{sec3}
 
 Using elementary calculus, it is easily shown that the polynomial $t^3-t^2-t-1$, the characteristic polynomial of the linear recurrence $T_{n+3}=T_{n+2}+T_{n+1}+T_n$, has exactly one real root $\lambda$, and $\lambda >1$. Hence $t^3-t^2-t-1$ has two non-real complex roots $\mu$ and $\bar\mu$, which are complex conjugates. $\lambda\mu\bar{\mu}=1$ shows $|\mu|=\sqrt{\mu\bar{\mu}}=\lambda^{-1/2}<1$. 
 
@@ -226,7 +225,7 @@ Using elementary calculus, it is easily shown that the polynomial $t^3-t^2-t-1$,
 There are $\alpha\in\mathbb{R}$ and $\beta, \ \gamma\in \mathbb{C}$ such that $T_n=\alpha\lambda^n+\beta\mu^n+\gamma \bar{\mu}^n$ for any integer $n\geq -3$.
 \end{lemma}
 \begin{proof}
-Since $\lambda, \mu, \bar{\mu}$ are the distinct roots of $t^3-t^2-t-1$, there are $\alpha, \beta, \gamma\in\mathbb{C}$ satisfying the equation given in the theorem. Because $T_n\in\mathbb{R}$ and $\mu^n\rightarrow0$ as $n\rightarrow\infty$, denoting by $\text{Im}(z)$ the imaginary part of $z\in\mathbb{C}$,
+Since $\lambda, \mu, \bar{\mu}$ are the distinct roots of $t^3-t^2-t-1$, there are $\alpha, \beta, \gamma\in\mathbb{C}$ satisfying the equation given in the theorem. Because $\mu^n\rightarrow0$ as $n\rightarrow\infty$ and $ T_n\in\mathbb{R}$, denoting by $\text{Im}(z)$ the imaginary part of $z\in\mathbb{C}$,
  \[
 0=\lim_{n\rightarrow\infty} \text{Im}(T_n)= \lim_{n\rightarrow\infty}\text{Im}(\alpha)\lambda^n
 \]
@@ -235,32 +234,34 @@ which shows $\text{Im}(\alpha)=0$ as $\lambda>1$.
 
 We will project the Tribonacci domain orthogonally to obtain a bounded two-dimensional region. The intuition behind the following definition is that 
 \(
-v_n=(T_{n-1}, T_{n-2}, T_{n-3})
+b_n=(T_{n-1}, T_{n-2}, T_{n-3})
 \)
 tends to become almost parallel to $(\lambda^2, \lambda, 1)$ as $n\rightarrow \infty$.
 
 \begin{definition}
-We denote $v_\infty:=(\lambda^2, \lambda, 1)\in \mathbb{R}^3$. The plane passing through the origin having a normal vector $v_\infty$ is defined as the \textbf{contracting plane}. For any $v\in \mathbb{R}^3$, we let $v'$ be the orthogonal projection of $v$ onto the contracting plane. In symbols,  \[v':=v-\frac{v\cdot v_\infty}{\|v_\infty \|^2}v_\infty\] 
+We denote $b_\infty:=(\lambda^2, \lambda, 1)\in \mathbb{R}^3$. The plane passing through the origin with a normal vector $b_\infty$ is called the \textbf{contracting plane}. For any $v\in \mathbb{R}^3$, we let $v'$ denote the orthogonal projection of $v$ onto the contracting plane. Using the standard inner product $\mathbb{R}^3$, denoted by a dot, \[v':=v-\frac{v\cdot b_\infty}{\|b_\infty \|^2}b_\infty\] 
 \end{definition}
 
 \begin{example}
-Since $v_n=T_{n-1}e_0+T_{n-2}e_1+T_{n-3}e_2$ by \cref{thm 3-1}, $v_n'=T_{n-1}e_0'+T_{n-2}e_1'+T_{n-3}e_2'$. The orthogonal projection of $\lambda^2e_0+\lambda e_1+e_2=v_\infty$ onto the contracting plane is the zero vector, so $\lambda^2e_0'+\lambda e_1'+e_2'=0$.
+Since $b_n=T_{n-1}e_0+T_{n-2}e_1+T_{n-3}e_2$ by \cref{thm 3-1}, $b_n'=T_{n-1}e_0'+T_{n-2}e_1'+T_{n-3}e_2'$. The orthogonal projection of $\lambda^2e_0+\lambda e_1+e_2=b_\infty$ onto the contracting plane is the zero vector, so $\lambda^2e_0'+\lambda e_1'+e_2'=0$.
 \end{example}
 
 \begin{definition}
-    The orthogonal projection of the Tribonacci domain onto the contracting plane is called the \textbf{Rauzy domain}, which we denote by $R$. In symbols, \[R=\{p_N':N\in \mathbb{N}\}\subset \mathbb{R}^3\]
+    The orthogonal projection of the Tribonacci domain onto the contracting plane is called the \textbf{Rauzy domain}, which we denote by $R$. In symbols, \[R=\{u_N':N\in \mathbb{N}\}\subset \mathbb{R}^3\]
 \end{definition}
+
+
 
 \begin{theorem}
     \label{thm 8}
-    There is a constant $C>0$ such that $\|v_n' \|<C\lambda^{-n/2}$ for all $n\in \mathbb{N}$.
+    There is a constant $C>0$ such that $\|b_n' \|<C\lambda^{-n/2}$ for all $n\in \mathbb{N}$.
 \end{theorem}
 \begin{proof}
-Using \cref{thm 8-0} and $v_n'=T_{n-1}e_0'+T_{n-2}e_1'+T_{n-3}e_2'$,
+Using \cref{thm 8-0} and $b_n'=T_{n-1}e_0'+T_{n-2}e_1'+T_{n-3}e_2'$,
 \[
-v_n'=\alpha\lambda^{n-3}(\lambda^2e_0'+\lambda e_1'+e_2') + \beta\mu^{n-3}(\mu^2e_0'+\mu e_1'+e_2')+\gamma\bar{\mu}^{n-3}(\bar{\mu}^2e_0'+\bar{\mu} e_1'+e_2')
+b_n'=\alpha\lambda^{n-3}(\lambda^2e_0'+\lambda e_1'+e_2') + \beta\mu^{n-3}(\mu^2e_0'+\mu e_1'+e_2')+\gamma\bar{\mu}^{n-3}(\bar{\mu}^2e_0'+\bar{\mu} e_1'+e_2')
 \]
-Here the first term vanishes, and the second and third terms have norm $|\mu|^{n}=\lambda^{-n/2}$ times a fixed number, finishing the proof.
+Here the first term vanishes. Using the standard inner product on $\mathbb{C}^3$, each of the last two terms has norm $|\mu|^{n}=\lambda^{-n/2}$ times a fixed real number. The proof is complete by the triangle inequality.
 \end{proof}
 
 \begin{theorem}
@@ -268,27 +269,27 @@ Here the first term vanishes, and the second and third terms have norm $|\mu|^{n
     The Rauzy domain $R$ is bounded.
 \end{theorem}
 \begin{proof}
-\cref{thm 8} and $0<\lambda^{-1/2}<1$ shows that the infinite series \(\sum_{n=0}^\infty \|v_n'\| \) converges. \cref{thm 7} and the triangle inequality shows that all vectors in $R$ has norm no greater than \(\sum_{n=0}^\infty \|v_n'\| \).
+\cref{thm 8} and $0<\lambda^{-1/2}<1$ shows that the infinite series \(\sum_{n=0}^\infty \|b_n'\| \) converges. \cref{thm 7} and the triangle inequality show that all vectors in $R$ have norm no greater than \(\sum_{n=0}^\infty \|b_n'\| \).
 \end{proof}
 
 By introducing the next definition, which can be interpreted as translating each layer to obtain the next layer, we seek an elegant geometric interpretation of the Rauzy domain. The notation $S_1+S_2$ means $\{s_1+s_2:s_1\in S_1,  s_2\in S_2\}$.
 
 
 \begin{definition}
-    We define the \textbf{$n$\textsuperscript{th} layer} $L_n$ inductively as $L_0=\{0\}$ and
+    We define the \textbf{$n$th layer $L_n$} inductively as $L_0=\{0\} $ and
     \begin{center}
-        $L_{n+1}=L_n+\{0, v_{3n}', v_{3n+1}', v_{3n+1}'+v_{3n}',v_{3n+2}', v'_{3n+2}+v_{3n}',v_{3n+2}'+v'_{3n+1}\}$
+        $L_{n+1}=L_n+\{0, b_{3n}', b_{3n+1}', b_{3n+1}'+b_{3n}',b_{3n+2}', b'_{3n+2}+b_{3n}',b_{3n+2}'+b'_{3n+1}\}$
     \end{center}
 \end{definition}
 \begin{theorem}
 \label{thm 10}
-For any $n\in \mathbb{N}$, $L_n=\{p_N':0\leq N< T_{3n}\}$. In particular, $\bigcup_{n=0}^\infty L_n=R$.
+For any $n\in \mathbb{N}$, $L_n=\{u_N':0\leq N< T_{3n}\}$. In particular, $\bigcup_{n=0}^\infty L_n=R$.
 \end{theorem}
 \begin{proof}
     From the definition of $L_n$, it is easy to show by induction that \[
     L_n=\left\{\sum_{k\in S}v'_k : S\subset\{0,1,\cdots,3n-1\}, \forall 0\leq k\leq n-1:\{3k, 3k+1, 3k+2\} \not\subset S \right\}
     \]
-    Since $L_n$ is contained in the projection of the set in \Cref{thm 5-1} (with $n$ replaced by $3n$) onto the contracting plane, $L_n\subseteq \{p_N':0\leq N< T_{3n}\}$. For the converse direction, \Cref{thm 6} shows that $L_n$ is exactly the set of $p'_{\text{sum}(S)}$ for each $S$ satisfying the condition given in $L_n$. The conclusion follows since \Cref{lemma} shows that each $S$ satisfying the condition given in $L_n$ has $\text{sum}(S)<T_{3n}$. 
+    Since $L_n$ is contained in the projection of the set in \Cref{thm 5-1} (with $n$ replaced by $3n$) onto the contracting plane, $L_n\subseteq \{u_N':0\leq N< T_{3n}\}$. For the converse direction, \Cref{thm 6} shows that $L_n$ is exactly the set of $p'_{\text{sum}(S)}$ for each $S$ satisfying the condition given in $L_n$. The conclusion follows since \Cref{lemma} shows that each $S$ satisfying the condition given in $L_n$ has $\text{sum}(S)<T_{3n}$. 
 \end{proof}
 
 We now prove that $L_n$ is a good approximation to $R$ when $n$ is large. This result can be applied to plotting the Rauzy domain with a computer, since we can know the asymptotic error bound when plotting $L_n$.
@@ -299,11 +300,143 @@ There is a constant $C>0$ such that for any $n\in\mathbb{N}$ and any vector $p\i
 \end{theorem}
 
 \begin{proof}
-Let $p=p_N'(N\in\mathbb{N})$ and let $S$ be the irreducible $T$-decomposition of $N$. $p=\sum_{k\in S}v_k'$ by \cref{thm 4}. For $S'=S\cap\{0,1,\cdots,3n-1\}$, $q=\sum_{k\in S'}v_k'\in L_n$ by definition. Because $p-q$ is a sum of some vectors among $v_{k}'(k\geq 3n)$, the triangle inequality and \cref{thm 8} shows that
+Let $p=u_N'(N\in\mathbb{N})$ and let $S$ be the irreducible $T$-decomposition of $N$. $p=\sum_{k\in S}b_k'$ by \cref{thm 4}. For $S'=S\cap\{0,1,\cdots,3n-1\}$, $q:=\sum_{k\in S'}b_k'\in L_n$by definition. Because $p-q$ is a sum of some vectors among $b_{k}'(k\geq 3n)$, the triangle inequality and \cref{thm 8} shows that
 \[
-\|p-q\|\leq\sum_{k\geq 3n}\|v_k' \|\leq\sum_{k\geq 3n}C'\lambda^{-k/2}=\frac{C'}{1-\lambda^{-1/2}}\lambda^{-3n/2}
+\|p-q\|\leq\sum_{k\geq 3n}\|b_k' \|\leq\sum_{k\geq 3n}C'\lambda^{-k/2}=\frac{C'}{1-\lambda^{-1/2}}\lambda^{-3n/2}
 \]
-where $C'$ is the constant in \cref{thm 8}. Hence the statement holds for $C=C'/(1-\lambda^{-1/2})$ .
+where $C'$ is the constant in \cref{thm 8}. Hence the statement holds for $C=C'/(1-\lambda^{-1/2})$.
 \end{proof}
+
+\section{Pisot Substitutions}
+\label{sec4}
+Now we will extend our study of the Tribonacci substitution $\tau$ to general substitutions on three letters. First, we define the symbols for words and corresponding vectors. The symbols $w_n, v_n,  p_{n,N}, D$ in this section correspond to $t_n, b_n, u_N,R$ of \cref{sec2} and \cref{sec3}, respectively.
+\begin{definition}
+Let $\sigma$ be a substitution. For every $n\in \mathbb{N}$, the word $v_n:=\sigma^n(0)$ is called the \textbf{$n$th word generated by $\sigma$}. We denote by $b_n$ the vector corresponding to $w_n$. For every $0\leq N\leq |t_n|$, we denote by $p_{n,N}$ the vector corresponding to the prefix of $w_n$ of length $N$.
+\end{definition}
+Since all results in this section will be about one substitution $\sigma$, we use the notations introduced in the definitions without mentioning them again. The following definition and \cref{p1} give a tool for examining $v_n(n\in\mathbb{N})$.
+\begin{definition}
+For a substitution $\sigma$, the $3\times3$ matrix $M$ such that $M_{i+1, j+1}\ (0\leq i\leq 2,\ 0\leq j\leq 2)$ is the number of times $i$ appears in $\sigma(j)$ is called the \textbf{matrix associated with $\sigma$}.
+\end{definition}
+\begin{theorem}
+\label{p1}
+For any word $w$, the vector corresponding to $\sigma(w)$ is $M$ times the vector corresponding to $w$. In particular, $v_n=M^nv_0\ (n\in \mathbb{N})$.
+\end{theorem}
+
+\begin{proof}
+If $w$ contains $a_i$ $i$s ($i=0, 1,2$), then $\sigma(w)$ contains $M_{i+1,1}a_0+M_{i+1,2}a_1+M_{i+1,3}a_2$ $i$s ($i=0, 1,2$), which is the $(i+1)$th coordinate of the column vector $M(a_0\ a_1\ a_2)^t$. Applying this to $v_0, v_1, \cdots, v_{n-1}$ in order gives $v_n=M^nv_0$.
+\end{proof}
+
+We will now limit our attention to the case where $M$ has some special properties. As in the case for Tribonacci substitutions, we will define a two-dimensional domain by orthogonal projection of the vectors associated with prefixes of the words generated by $\sigma$.
+
+\begin{definition}
+If a $3\times3$ matrix $M$ with non-negative integer entries has three distinct eigenvalues $\lambda,\ \mu_1, \ \mu_2$ such that $\lambda\in\mathbb{R}$, $\lambda>1$, $0<|\mu_2|\leq|\mu_1|<1$, $M$ is called a \textbf{Pisot matrix}.
+\end{definition}
+
+\begin{theorem}
+\label{p2}
+For a Pisot matrix $M$, the eigenvalues of $M$ are algebraic integers of degree $3$.
+\end{theorem}
+\begin{proof}
+Because the characteristic polynomial of $M$ is a monic polynomial with integer coefficients, all eigenvalues of $M$ are algebraic integers. If some eigenvalue $\alpha$ had degree $2$ over $\mathbb{Q}$, the only eigenvalue that is neither $\alpha$ nor its algebraic conjugate must have degree $1$ over $\mathbb{Q}$. Hence it suffices to show that $M$ cannot have an integer eigenvalue.
+If $M$ has an integer eigenvalue, $\lambda\in\mathbb{Z}$ because $\mu_1, \ \mu_2$ are nonzero complex numbers with absolute value less than 1. Then $\mu_1, \ \mu_2$ are roots of the monic quadratic polynomial obtained by dividing the characteristic polynomial of $M$ by $t-\lambda$. Hence $\mu_1\mu_2\in\mathbb{Z}$, contradicting $0<|\mu_2|\leq|\mu_1|<1$.
+\end{proof}
+
+\begin{definition}
+A substitution $\sigma$ is a \textbf{Pisot substitution} if its associated matrix $M$ is a Pisot matrix. For a Pisot substitution $\sigma$, we denote by $v_\infty, u_1, u_2$ eigenvectors of $M$ corresponding to the eigenvalues $\lambda, \mu_1, \mu_2$, respectively. The plane passing through the origin with a normal vector $v_\infty$ is called the \textbf{contracting plane}. For any $v\in\mathbb{R}^3$, we let $v'$ denote the orthogonal projection of $v$ onto the contracting plane. Using the standard inner product on $\mathbb{R}^3$, denoted by a dot, \[v':=v-\frac{v\cdot v_\infty}{\|v_\infty \|^2}v_\infty\]
+
+For any $n\in\mathbb{N}$, we denote by $D_n$ the set of orthogonal projections onto the contracting plane of all vectors corresponding to prefixes of $w_n$. That is,
+\[
+D_n=\left\{p_{n,N}': 0\leq N\leq|w_n| \right\}
+\]
+$D:=\bigcup_{n\in\mathbb{N}}D_n$ is called the \textbf{Pisot Domain}.
+\end{definition}
+
+Hereafter, we assume that $\sigma$ is a Pisot substitution and use the notations in the preceding definitions. The next theorem is analogous to \cref{thm 8}.
+
+\begin{theorem}
+\label{t1}
+For a fixed word $w$, there is a constant $C>0$ such that the projection onto the contracting plane of the vector corresponding to $\sigma^n(w)$ has norm less than $C|\mu_1|^n$ for all $n\in \mathbb{N}$. In particular, there is a constant $C>0$ such that $\|v_n'\| <C|\mu_1|^n$ for all $n\in \mathbb{N}$.
+\end{theorem}
+\begin{proof}
+Let $v$ be the vector corresponding to $w$. Since $\{v_\infty, u_1, u_2\}$ is a basis of $\mathbb{C}^3$, there are $\alpha, \beta,\gamma\in\mathbb{C}$ with $v=\alpha v_\infty +\beta u_1+\gamma u_2$. By \cref{p1}, the projection onto the contracting plane of the vector corresponding to $\sigma^n(w)$ is 
+\[
+\sigma^n(v)'=(M^nv)'=\alpha\lambda^nv_\infty'+\beta\mu_1^nu_1'+\gamma\mu_2^n u_2'
+\]
+Here $v_\infty'=0$ and the last two terms have norms $|\mu_1|^n$ times a fixed real number and $|\mu_2|^n$ times a fixed real number, respectively. Because $|\mu_1|\geq|\mu_2|$, the proof is complete by the triangle inequality. Use $w=0$ to get $\|v_n\| <C|\mu_1|^n$.
+\end{proof}
+
+Unlike the case for Tribonacci substitutions, it isn't guaranteed that $w_n$ is a prefix of $w_{n+1}$. A natural question is whether $D_n$ still approaches $D$ as $n\rightarrow\infty$, which is not obvious because there can be some points in $D$ that are only present in $D_n$ with small $n$. The rest of this section proves this for special cases.
+
+\begin{theorem}
+\label{t2}
+If the initial letter of $w_T$ is $0$ for some positive integer $T$, then $w_n$ is a prefix of $w_{n+T}$ for all $n\geq N$.
+\end{theorem}
+\begin{proof}
+$w_0=0$ is clearly a prefix of $w_T$. If $w_n$ is a prefix of $w_{n+T}$, $w_{n+1}=\sigma(w_n)$ is a prefix of $w_{n+T+1}=\sigma(w_{n+T})$, completing the proof by induction.
+\end{proof}
+
+\begin{lemma}
+\label{l3}
+There is $n_0\in\mathbb{N}$ such that for any $n\geq n_0$, $w_n$ contains all of the three letters $0,1,2$.
+\end{lemma}
+\begin{proof}
+There are seven possible states, namely nonempty subsets of $\{0,1,2\}$, for the set of distinct letters in a word. Thus the set of distinct letters in $w_n$ eventually enters a cycle. Since $M$ is invertible, the number of distinct letters in $w_{n+1}$ cannot be less than that of $w_n$. Hence the number of distinct letters remains constant after entering the cycle, and our goal is to show that this number, say $C$, cannot be $1$ or $2$. The subspace of $\mathbb{R}^3$ spanned by the unit vectors corresponding to the letters contained in the cycle is invariant under multiplication by $M$. Since \cref{p2} shows that the characteristic polynomial of $M$ is irreducible over $\mathbb{Q}$, this invariant subspace must be $\mathbb{R}^3$. This proves that the cycle contains all of the three letters $0,1,2$.\\
+If $C=1$, the only possibility for the cycle, up to exchanging roles of $0, 1, 2$, is $\{0\}\rightarrow \{1\}\rightarrow \{2\}\rightarrow\{0\}$, and the characteristic polynomial of $M$ must be $t^3-|w_3|$ which has three zeros with absolute value at least $1$, contradiction. If $C=2$, there are two possibilities up to symmetry, namely $\{0, 1\}\rightarrow\{0,2\}\rightarrow\{0,1\}$ and $\{0, 1\}\rightarrow\{0,2\}\rightarrow\{1,2\}\rightarrow\{0,1\}$. In the former case $\sigma(0)$ cannot contain neither $1$ nor $2$, so $|\sigma(0)|$ is an integer eigenvalue of $M$ contradicting \cref{p2}. In the latter case, $\sigma(0)$, $\sigma(1)$, $\sigma(2)$ consists of $1$, $2$, $0$ exclusively, respectively, which is a contradiction as in the former case. Hence $C=3$ and the cycle is the trivial cycle $\{0,1,2\}$.
+\end{proof}
+
+\begin{theorem}
+\label{t3}
+Suppose that the initial letter of $w_T$ is $0$ for some positive integer $T$. Then for any infinite set $S\subseteq\mathbb{N}$, $\epsilon>0$, and $p\in D$, there is some $q\in\bigcup_{n\in S}D_n$ with $\|p-q\|<\epsilon$.
+\end{theorem}
+\begin{proof}
+Suppose $p=p'_{n,N}\in D$. Since $S$ is infinite, there is some $r\in\mathbb{N}$ such that there are infinitely many integers congruent to $r$ modulo $T$ in $S$. Using $n_0$ of \cref{l3}, take $k_0\in\mathbb{N}$ with $r-n+k_0T\geq n_0$. Then $w_{r-n+k_0T}$ contains $0$, so $\sigma^n(w_{r-n+k_0T})=w_{r+k_0T}$ contains $\sigma^n(0)=w_n$. Let $W$ be a word such that $Ww_n$ is a prefix of $w_{r+k_0T}$. Using $C$ in \cref{t1} with $v=W$, choose $k\in\mathbb{N}$ such that $C|\mu_1|^{kT}<\epsilon$ and $r+(k+k_0)T\in S$, which is guaranteed to exist by our choice of $r$. Now $w_{r+(k+k_0)T}=\sigma^{kT}(w_{r+k_0T})$ has $\sigma^{kT}(Ww_n)=\sigma^{kT}(W)w_{n+kT}$ as a prefix, and hence has $\sigma^{kT}(W)w_n$ as a prefix since $w_n$ is a prefix of $w_{n+kT}$ by \cref{t2}. The projection onto the contracting plane of the vector corresponding to $\sigma^{kT}(W)$ has norm less than $\epsilon$, so taking $q$ as the projection onto the contracting plane of the vector corresponding to the prefix of length $|\sigma^{kT}(W)|+N$ of $w_{r+(k+k_0)T}$ finishes the proof.
+\end{proof}
+
+We explain the preceding theorem more intuitively using the concept of closure. We start with recalling the definition of closure applied to the Euclidean space.
+
+\begin{definition}
+For a set $S\subseteq\mathbb{R}^3$, the \textbf{closure} of $S$, denoted by $\overline{S}$, is the set
+\[
+\overline{S}=\left\{x\in\mathbb{R}^3 : \forall \epsilon>0, \exists y\in S \ \text{such that}\ \|y-x\| <\epsilon \right\}
+\]
+\end{definition}
+
+\begin{theorem}
+\label{t4}
+If the initial letter of $w_T$ is $0$ for some positive integer $T$, then for any infinite set $S\subseteq\mathbb{N}$,
+\[
+\overline{\bigcup_{n\in S}D_n}=\overline{D}
+\]
+\end{theorem}
+\begin{proof}
+$\overline{\bigcup_{n\in S}D_n}\subseteq\overline{D}$ is obvious. For the opposite direction, take any $P\in \overline{D}$. For any $\epsilon>0$, there is some $p\in D$ with $\|p-P\|<\epsilon/2$. By \cref{t3}, there is some $q\in\bigcup_{n\in S}D_n$ with $\|p-q\|<\epsilon/2$. The triangle inequality shows $\|q-P\|<\epsilon$, so $P\in\overline{\bigcup_{n\in S}D_n}\subseteq\overline{D}$.
+\end{proof}
+
+\begin{example}
+Consider the substitution given by $\sigma(0)=01, \sigma(1)=02, \sigma(2)=0$; that is, roles of $0$ and $1$ reversed in the Tribonacci substitution. With computation for small $n$ and a slight modification of \cref{thm 11}, it is not hard to see that the vector corresponding to the word $0$ is in $\overline{D}$ but not in $\overline{\bigcup_{n\geq1}D_n}$. Hence \cref{t4} can be false for arbitrary Pisot substitutions. It is tempting to conjecture that \cref{t4} will be true up to exception of finitely many points(that is, $\overline{D}\setminus\overline{\bigcup_{n\in S}D_n}$ is finite), which we did not prove yet.
+\end{example}
+
+\begin{lemma}
+\label{l5}
+For any Pisot matrix $M$, there is a substitution $\sigma$ with associated matrix $M$ such that the initial letter of $w_T$ is $0$ for some positive integer $T$.
+\end{lemma}
+\begin{proof}
+Consider the graph $G$ with vertex set $\{0,1,2\}$ and an edge going from $a$ to $b$ if and only if $M_{b+1, a+1}>0$. Because $M$ cannot have any empty rows or columns, each vertex has both in-degree and out-degree nonzero. We claim that $G$ has a cycle containing $0$. If this were not the case, there cannot be any vertex that is connected with $0$ in both directions, so we can assume without loss of generality that edges $1\rightarrow0$ and $0\rightarrow 2$ exist. Then edges $2\rightarrow0$ or $2\rightarrow 1$ make a cycle, so $M_{13}=M_{23}=0$ and $M_{33}$ is an eigenvalue of $M$, contradicting \cref{p2}. Now for the cycle $0\rightarrow a_1\rightarrow\cdots\rightarrow a_{n-1}\rightarrow 0$, we can construct $\sigma$ so that the first letter of $\sigma(a_i)$ is $a_{i+1}$ for $0\leq i<n$ $(a_0=a_n=0)$.
+\end{proof}
+
+\begin{theorem}
+\label{t5}
+For any Pisot matrix $M$, there is a substitution $\sigma$ with associated matrix $M$ such that for any infinite set $S\subseteq\mathbb{N}$,
+\[
+\overline{\bigcup_{n\in S}D_n}=\overline{D}
+\]
+\end{theorem}
+\begin{proof}
+Apply \cref{t4} to the substitution given by \cref{l5}.
+\end{proof}
+\begin{thebibliography}{9}
+\bibitem{cow}
+Lothaire (2004), Applied Combinatorics on Words, Sections 10.7 and 10.8
+\end{thebibliography}
 
 \end{document}
