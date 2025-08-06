@@ -1,9 +1,13 @@
 import numpy as np
 import matplotlib.pyplot as plt
 
+import warnings
+warnings.filterwarnings('ignore')
+
+
 ################################################################
 rules = [
-    [[0,1], [0,2], [0]],    #0, 01, 0102, (-1) + (-2) + (-3)
+    [[2,1], [0,2], [1]],    #0, 01, 0102, (-1) + (-2) + (-3)
     [[0,1], [2], [0]],    #0, 01, 012, (-1) + (-3)
     [[1,2], [2], [0]],    #0, 12, 20, (-3) + (-2)
     [[1], [2], [2,1,0]],  #0, 1, 2, (-1) + (-2) + (-3)
@@ -14,7 +18,7 @@ rules = [
 n = 50
 dot_size = 4
 dot_count_limit = 21557
-basis = [ [1,0], [-1, 1] ]  #alpha, alpha^2
+basis = [ [1,0], [0, 1] ]  #alpha, alpha^2
 assert(abs(basis[0][0] * basis[1][1] - basis[0][1] * basis[1][0]) == 1)
 ################################################################
 
@@ -23,19 +27,24 @@ for rule in rules:
   eigvals = np.linalg.eig(np.array(mat))[0]
   dorm = None
   flag = False
+  print("rule: ", f"0 -> {rule[0]}, 1 -> {rule[1]}, 2 -> {rule[2]}")
+  print("eigenvalues: ", *eigvals)
   for v in eigvals:
-    if abs(v) >= 1:
-      if dorm is not None or np.imag(v) > 1:
+    if abs(v) >= 1 - 1e-10:
+      if dorm is not None or np.imag(v) != 0:
         print("Not a Pisot substitution")
         flag = True
         break
       else:
         dorm = v
+    if v == 0:
+      print("Not a Pisot substitution")
+      flag = True
+      break
   if flag:
     continue
   alpha = float(1 / dorm)
-  print(rule)
-  print(alpha)
+  print(f"alpha:" ,alpha)
   l = [0]
   for i in range(n):
     tl = []
