@@ -18,7 +18,7 @@ basis = [ [1,0], [-1, 1] ]  #alpha, alpha^2
 assert(abs(basis[0][0] * basis[1][1] - basis[0][1] * basis[1][0]) == 1)
 ################################################################
 
-for rule in rules[:1]:
+for rule in rules:
   mat = [[rule[j].count(i) for j in range(3)] for i in range(3)]
   eigvals = np.linalg.eig(np.array(mat))[0]
   dorm = None
